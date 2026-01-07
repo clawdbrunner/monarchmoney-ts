@@ -1,49 +1,13 @@
-// Main exports
-export { MonarchClient } from './client/MonarchClient'
+export * from './core/auth';
+export * from './core/transport/graphql';
+export * from './core/errors';
 
-// Types
-export * from './types'
-
-// Authentication
-export { AuthenticationService, SessionStorage } from './client/auth'
-export type { LoginOptions, MFAOptions } from './client/auth'
-
-// GraphQL
-export { GraphQLClient } from './client/graphql'
-export type { GraphQLRequestOptions } from './client/graphql'
-
-// Optimization utilities for MCP and other integrations
-export { ResponseFormatter, type VerbosityLevel } from './client/ResponseFormatter'
-export { getQueryForVerbosity } from './client/graphql/operations'
-
-// Cache
-export { MemoryCache, PersistentCache, MultiLevelCache } from './cache'
-
-// API modules
-export type { AccountsAPI } from './api/accounts'
-export type { TransactionsAPI } from './api/transactions'
-export type { BudgetsAPI } from './api/budgets'
-
-// Utilities
-export {
-  MonarchError,
-  MonarchAuthError,
-  MonarchAPIError,
-  MonarchRateLimitError,
-  MonarchValidationError,
-  MonarchNetworkError,
-  MonarchGraphQLError,
-  MonarchSessionExpiredError,
-  MonarchMFARequiredError,
-  MonarchConfigError,
-  handleHTTPResponse,
-  handleGraphQLErrors,
-  isRetryableError,
-  retryWithBackoff
-} from './utils/errors'
-export { logger, createLogger } from './utils/logger'
-export { EncryptionService } from './utils/encryption'
-
-// Default export
-import { MonarchClient as Client } from './client/MonarchClient'
-export default Client
+// Domains
+export * from './domains/accounts';
+export * from './domains/transactions';
+export * from './domains/categories';
+export * from './domains/cashflow';
+export * from './domains/budgets';
+export * from './domains/recurring';
+export * from './domains/portfolio';
+export * from './domains/messaging';

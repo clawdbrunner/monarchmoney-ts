@@ -1,0 +1,2 @@
+type ResponseBody = null;
+
