@@ -1,9 +1,9 @@
-import type { AccountsClient } from '../domains/accounts';
-import type { TransactionsClient } from '../domains/transactions';
-import type { CategoriesClient } from '../domains/categories';
-import type { CashflowClient } from '../domains/cashflow';
-import { formatAccounts, formatCashflowSummary, formatTransactions } from '../formatters';
-import { MonarchError } from '../core/errors';
+import type { AccountsClient } from '../domains/accounts/index.js';
+import type { TransactionsClient } from '../domains/transactions/index.js';
+import type { CategoriesClient } from '../domains/categories/index.js';
+import type { CashflowClient } from '../domains/cashflow/index.js';
+import { formatAccounts, formatCashflowSummary, formatTransactions } from '../formatters/index.js';
+import { MonarchError } from '../core/errors/index.js';
 
 export interface McpContextClients {
   accounts: AccountsClient;

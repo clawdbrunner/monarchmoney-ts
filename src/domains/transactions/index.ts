@@ -1,4 +1,4 @@
-import { GraphQLClient } from '../../core/transport/graphql';
+import { GraphQLClient } from '../../core/transport/graphql.js';
 
 export interface TransactionFilterInput {
   transactionVisibility?: string;
@@ -34,6 +34,26 @@ export interface TransactionsListResponse {
   totalCount: number;
   totalSelectableCount: number;
   results: Transaction[];
+}
+
+export function sanitizeTransactionFilters(input?: TransactionFilterInput): TransactionFilterInput {
+  const base: TransactionFilterInput = {
+    transactionVisibility: 'non_hidden_transactions_only',
+  };
+  if (!input) return base;
+  const clean: TransactionFilterInput = { ...base };
+  if (input.startDate) clean.startDate = input.startDate;
+  if (input.endDate) clean.endDate = input.endDate;
+  if (input.accountIds) clean.accountIds = [...input.accountIds];
+  if (input.categoryIds) clean.categoryIds = [...input.categoryIds];
+  if (input.merchantIds) clean.merchantIds = [...input.merchantIds];
+  if (input.tagIds) clean.tagIds = [...input.tagIds];
+  if (input.search) clean.search = input.search;
+  if (input.isCredit !== undefined) clean.isCredit = Boolean(input.isCredit);
+  if (input.minAmount !== undefined) clean.minAmount = input.minAmount;
+  if (input.maxAmount !== undefined) clean.maxAmount = input.maxAmount;
+  if (input.transactionVisibility) clean.transactionVisibility = input.transactionVisibility;
+  return clean;
 }
 
 const WEB_GET_TRANSACTIONS_LIST = /* GraphQL */ `
@@ -172,9 +192,10 @@ export class TransactionsClient {
     orderBy?: string;
   }): Promise<TransactionsListResponse> {
     const { limit = 50, offset = 0, filters, orderBy = 'date' } = params;
+    const builtFilters = sanitizeTransactionFilters(filters);
     const data = await this.graphql.query<{
       allTransactions: TransactionsListResponse;
-    }>(WEB_GET_TRANSACTIONS_LIST, { limit, offset, filters, orderBy });
+    }>(WEB_GET_TRANSACTIONS_LIST, { limit, offset, filters: builtFilters, orderBy });
     return data.allTransactions;
   }
 

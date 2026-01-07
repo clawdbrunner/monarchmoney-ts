@@ -6,7 +6,7 @@ export interface AccountSummary {
   includeInNetWorth?: boolean;
   type?: { name?: string; display?: string; group?: string };
 }
-import { GraphQLClient } from '../../core/transport/graphql';
+import { GraphQLClient } from '../../core/transport/graphql.js';
 
 // Types pared down for v2; use docs/schemas for full fields if needed.
 export interface Account {
@@ -36,8 +36,29 @@ export interface AccountsPageResponse {
 }
 
 export interface AccountsFilters {
-  // Placeholder for future filters (e.g., includeHidden, institutions, ownership)
-  [key: string]: unknown;
+  includeHidden?: boolean;
+}
+
+function buildAccountFilters(filters?: AccountsFilters): Record<string, unknown> | undefined {
+  if (!filters) return undefined;
+  const out: Record<string, unknown> = {};
+  // The capture does not show a hide flag; keep client-side filtering hint.
+  if (filters.includeHidden === false) {
+    out.includeHidden = false;
+  }
+  return Object.keys(out).length ? out : undefined;
+}
+
+export function validateAccountsFilters(filters?: unknown): AccountsFilters {
+  if (filters === undefined) return {};
+  if (filters && typeof filters === 'object' && !Array.isArray(filters)) {
+    const obj = filters as Record<string, unknown>;
+    const includeHidden = obj.includeHidden === undefined ? undefined : Boolean(obj.includeHidden);
+    const clean: AccountsFilters = {};
+    if (includeHidden !== undefined) clean.includeHidden = includeHidden;
+    return clean;
+  }
+  throw new Error('Invalid accounts filters');
 }
 
 const WEB_GET_ACCOUNTS_PAGE = /* GraphQL */ `
@@ -146,7 +167,7 @@ export class AccountsClient {
   async list(filters?: AccountsFilters): Promise<AccountsPageResponse> {
     const data = await this.graphql.query<{ hasAccounts: boolean; accountTypeSummaries: AccountsPageResponse['accountTypeSummaries'] }>(
       WEB_GET_ACCOUNTS_PAGE,
-      { filters }
+      { filters: buildAccountFilters(filters) }
     );
     return data;
   }

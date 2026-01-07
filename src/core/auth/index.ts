@@ -4,7 +4,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import os from 'os';
 import { randomUUID } from 'crypto';
-import { AuthError, ValidationError } from '../errors';
+import { AuthError, ValidationError } from '../errors/index.js';
 
 const LOGIN_ENDPOINT = 'https://api.monarchmoney.com/auth/login/';
 const DEFAULT_SESSION_FILE = path.join(os.homedir(), '.mm', 'session.json');
@@ -47,6 +47,13 @@ export class AuthService {
 
   getSession(): SessionInfo | undefined {
     return this.session;
+  }
+
+  isSessionExpired(): boolean {
+    if (!this.session?.tokenExpiration) return false;
+    const expires = Date.parse(this.session.tokenExpiration);
+    if (Number.isNaN(expires)) return false;
+    return Date.now() > expires;
   }
 
   async loginWithToken(opts: TokenLoginOptions): Promise<SessionInfo> {
@@ -122,6 +129,10 @@ export class AuthService {
       const parsed = JSON.parse(raw) as SessionInfo;
       if (!parsed.token) throw new Error('invalid session file');
       this.session = parsed;
+      if (this.isSessionExpired()) {
+        await this.invalidateSession();
+        return undefined;
+      }
       return parsed;
     } catch (err) {
       if ((err as NodeJS.ErrnoException).code === 'ENOENT') return undefined;

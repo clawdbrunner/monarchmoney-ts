@@ -184,6 +184,7 @@ GraphQL client behavior: header parity with web (Token auth, device UUID, `Clien
 - Until real captures are added, rely on the per-method tables above and TS types; mark any inferred fields as “provisional”.
 - Current capture summary: see `docs/mmtraf-capture-2026-01-07.md` for the first occurrence of 53 operations (accounts, transactions, cashflow, budgets, portfolio, recurring, messaging, advice). Use the listed indices with `mmtraf schema:req-at|res-at` for full types.
 - Full request/response schemas generated from that capture live in `docs/schemas/` and are collated in `docs/API_REFERENCE_V2.md` for per-operation reference.
+- Defaults/validation: transactions default `transactionVisibility` to `non_hidden_transactions_only` and sanitize filters; accounts filters currently support `includeHidden` flag (client-side hint). Auth invalidates expired sessions on load; GraphQL client now includes minimal pacing and retries on 429/5xx.
 
 ## Automation & tooling (patterns to document)
 - Traffic capture & replay: Chrome DevTools traffic recorder + `mmtraf` analyzer from `chernetsov/monarch-money-ts` for inspecting GraphQL ops (`list`, `summary`, `show`, `graphql:req-at`, `schema:*` commands).

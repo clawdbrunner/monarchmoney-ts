@@ -1,4 +1,4 @@
-import type { CashflowSummary } from '../domains/cashflow';
+import type { CashflowSummary } from '../domains/cashflow/index.js';
 
 export function formatCashflowSummary(summary?: CashflowSummary): string {
   if (!summary) return 'No cashflow data';

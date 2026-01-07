@@ -1,5 +1,5 @@
-import { GraphQLClient } from '../../core/transport/graphql';
-import type { DateRange } from '../../core/types';
+import { GraphQLClient } from '../../core/transport/graphql.js';
+import type { DateRange } from '../../core/types/index.js';
 
 export interface CashflowFilters extends DateRange {
   accounts?: string[];

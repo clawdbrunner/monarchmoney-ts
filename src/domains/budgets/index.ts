@@ -1,4 +1,4 @@
-import { GraphQLClient } from '../../core/transport/graphql';
+import { GraphQLClient } from '../../core/transport/graphql.js';
 
 export interface BudgetStatus {
   hasBudget: boolean;

@@ -1,6 +1,6 @@
-import type { Account } from '../domains/accounts';
-import type { Transaction } from '../domains/transactions';
-export * from './cashflow';
+import type { Account } from '../domains/accounts/index.js';
+import type { Transaction } from '../domains/transactions/index.js';
+export * from './cashflow.js';
 
 export type Verbosity = 'ultra-light' | 'light' | 'standard';
 
