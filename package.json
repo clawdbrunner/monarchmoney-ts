@@ -18,6 +18,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "type-check": "tsc -p tsconfig.json --noEmit",
     "clean": "rm -rf dist",
+    "smoke": "tsx scripts/smoke.ts",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "keywords": [
