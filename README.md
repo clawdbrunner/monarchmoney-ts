@@ -40,7 +40,7 @@ npm install monarchmoney
 import { MonarchClient } from 'monarchmoney'
 
 const client = new MonarchClient({
-  baseURL: 'https://api.monarchmoney.com',
+  baseURL: 'https://api.monarch.com',
   timeout: 30000
 })
 
@@ -175,7 +175,7 @@ const cashflow = await client.cashflow.getCashflowSummary()
 ### **Client Configuration**
 ```typescript
 const client = new MonarchClient({
-  baseURL: 'https://api.monarchmoney.com',
+  baseURL: 'https://api.monarch.com',
   timeout: 30000,
   retries: 3,
   retryDelay: 1000,

@@ -21,7 +21,7 @@ export class DirectAuthenticationService {
   private sessionStorage: SessionStorage
 
   constructor(
-    baseUrl: string = 'https://api.monarchmoney.com',
+    baseUrl: string = 'https://api.monarch.com',
     sessionStorage?: SessionStorage
   ) {
     this.baseUrl = baseUrl

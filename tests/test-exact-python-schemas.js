@@ -8,7 +8,7 @@ async function testExactPythonSchemas() {
   console.log('🐍 Testing with EXACT Python Library Schemas...')
   
   const client = new MonarchClient({
-    baseURL: 'https://api.monarchmoney.com',
+    baseURL: 'https://api.monarch.com',
     timeout: 30000,
     retries: 1
   })

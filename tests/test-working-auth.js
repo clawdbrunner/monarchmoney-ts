@@ -25,7 +25,7 @@ async function testWorkingAuth() {
     process.exit(1)
   }
 
-  const baseUrl = 'https://api.monarchmoney.com'
+  const baseUrl = 'https://api.monarch.com'
   const deviceUuid = generateDeviceUUID()
   
   // Generate MFA code

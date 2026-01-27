@@ -12,7 +12,7 @@ async function testSingleRequestAuth() {
     const { MonarchClient } = await import('./dist/cjs/index.js')
     
     const client = new MonarchClient({
-      baseURL: 'https://api.monarchmoney.com',
+      baseURL: 'https://api.monarch.com',
       timeout: 30000,
       retries: 1
     })
@@ -25,7 +25,7 @@ async function testSingleRequestAuth() {
     console.log('✅ No separate MFA request needed!')
     
     console.log('\n📋 Request details:')
-    console.log('• URL: https://api.monarchmoney.com/auth/login/')
+    console.log('• URL: https://api.monarch.com/auth/login/')
     console.log('• Headers: Client-Platform, x-cio-*, etc.')
     console.log('• Body: { username, password, totp: [generated_code] }')
 

@@ -10,7 +10,7 @@ async function testDirect() {
   });
 
   const client = new MonarchClient({
-    baseURL: 'https://api.monarchmoney.com',
+    baseURL: 'https://api.monarch.com',
     timeout: 30000,
     saveSession: false
   });

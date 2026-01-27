@@ -20,7 +20,7 @@ function generateDeviceUUID() {
 async function investigateCaptcha() {
   console.log('🕵️ Investigating MonarchMoney CAPTCHA implementation...')
   
-  const baseUrl = 'https://api.monarchmoney.com'
+  const baseUrl = 'https://api.monarch.com'
   const deviceUuid = generateDeviceUUID()
 
   // 1. Try to get CAPTCHA challenge without authentication

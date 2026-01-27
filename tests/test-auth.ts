@@ -21,7 +21,7 @@ async function testAuth() {
     const { SessionStorage } = await import('./dist/client/auth/SessionStorage.js')
 
     const sessionStorage = new SessionStorage()
-    const authService = new AuthenticationService('https://api.monarchmoney.com', sessionStorage)
+    const authService = new AuthenticationService('https://api.monarch.com', sessionStorage)
 
     console.log('\n🚀 Starting authentication...')
 

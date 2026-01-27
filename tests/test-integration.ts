@@ -20,7 +20,7 @@ async function testIntegration() {
     // Initialize client
     console.log('\n🚀 Initializing MonarchClient...')
     const client = new MonarchClient({
-      baseURL: 'https://api.monarchmoney.com',
+      baseURL: 'https://api.monarch.com',
       timeout: 30000
     })
 

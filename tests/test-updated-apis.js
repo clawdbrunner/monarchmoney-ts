@@ -8,7 +8,7 @@ async function testUpdatedAPIs() {
   console.log('🔧 Testing Updated TypeScript API Classes...')
   
   const client = new MonarchClient({
-    baseURL: 'https://api.monarchmoney.com',
+    baseURL: 'https://api.monarch.com',
     timeout: 30000,
     retries: 1
   })

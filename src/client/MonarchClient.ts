@@ -1,3 +1,6 @@
+import * as fs from 'fs'
+import * as path from 'path'
+import * as os from 'os'
 import { AuthenticationService, LoginOptions, MFAOptions } from './auth'
 import { DirectAuthenticationService, DirectLoginOptions } from './auth/DirectAuthenticationService'
 import { GraphQLClient } from './graphql'
@@ -10,19 +13,31 @@ import { CashflowAPIImpl } from '../api/cashflow'
 import { RecurringAPIImpl } from '../api/recurring'
 import { InstitutionsAPIImpl } from '../api/institutions'
 import { InsightsAPIImpl } from '../api/insights'
-import { 
+import {
   getEnvironmentVariable,
   logger,
   deepMerge
 } from '../utils'
 import { MonarchConfig, /* CacheConfig, */ SessionInfo } from '../types'
 
+// Browser session format from ~/.config/monarch/session.json
+interface BrowserSession {
+  token: string
+  userId: string
+  email: string
+  householdId?: string
+  deviceUUID: string
+  graphqlEndpoint?: string
+  savedAt?: string
+  source?: string
+}
+
 // Default configuration
 const DEFAULT_CONFIG: Required<MonarchConfig> = {
   email: '',
   password: '',
   sessionToken: '',
-  baseURL: 'https://api.monarchmoney.com',
+  baseURL: 'https://api.monarch.com',
   timeout: 30000,
   retries: 3,
   retryDelay: 1000,
@@ -384,15 +399,74 @@ export class MonarchClient {
     return new MonarchClient(config)
   }
 
-  static async createAndLogin(config: MonarchConfig & { 
+  static async createAndLogin(config: MonarchConfig & {
     email: string
-    password: string 
+    password: string
   }): Promise<MonarchClient> {
     const client = new MonarchClient(config)
     await client.login({
       email: config.email,
       password: config.password
     })
+    return client
+  }
+
+  /**
+   * Load a browser session from a JSON file.
+   * This is useful when programmatic login is blocked by Cloudflare protection.
+   *
+   * Session file format (save to ~/.config/monarch/session.json):
+   * {
+   *   "token": "your-token-from-browser-localstorage",
+   *   "userId": "your-user-id",
+   *   "email": "your@email.com",
+   *   "deviceUUID": "your-device-uuid",
+   *   "graphqlEndpoint": "https://api.monarch.com/graphql"
+   * }
+   *
+   * @param sessionPath Path to session JSON file (default: ~/.config/monarch/session.json)
+   */
+  loadBrowserSession(sessionPath?: string): void {
+    const defaultPath = path.join(os.homedir(), '.config/monarch/session.json')
+    const filePath = sessionPath || defaultPath
+
+    if (!fs.existsSync(filePath)) {
+      throw new Error(`Session file not found: ${filePath}`)
+    }
+
+    const data = fs.readFileSync(filePath, 'utf8')
+    const browserSession = JSON.parse(data) as BrowserSession
+
+    if (!browserSession.token) {
+      throw new Error('Invalid session file: missing token')
+    }
+
+    // Use the internal session storage mechanism
+    const sessionStorage = (this.auth as any).sessionStorage
+    if (sessionStorage) {
+      sessionStorage.saveSession(browserSession.token, {
+        userId: browserSession.userId,
+        email: browserSession.email,
+        deviceUuid: browserSession.deviceUUID
+      })
+    }
+
+    logger.info(`Browser session loaded for: ${browserSession.email}`)
+  }
+
+  /**
+   * Create a MonarchClient using a saved browser session.
+   * This bypasses programmatic login which may be blocked by Cloudflare.
+   *
+   * @param sessionPath Path to session JSON file (default: ~/.config/monarch/session.json)
+   * @param config Additional configuration options
+   */
+  static createWithBrowserSession(
+    sessionPath?: string,
+    config?: MonarchConfig
+  ): MonarchClient {
+    const client = new MonarchClient(config)
+    client.loadBrowserSession(sessionPath)
     return client
   }
 }

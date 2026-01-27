@@ -12,7 +12,7 @@ async function testFreshUUID() {
     const { MonarchClient } = await import('./dist/cjs/index.js')
     
     const client = new MonarchClient({
-      baseURL: 'https://api.monarchmoney.com',
+      baseURL: 'https://api.monarch.com',
       timeout: 30000,
       retries: 1
     })
@@ -25,7 +25,7 @@ async function testFreshUUID() {
     console.log('✅ No UUID persistence between requests')
     
     console.log('\n📋 Final request structure:')
-    console.log('• URL: https://api.monarchmoney.com/auth/login/')
+    console.log('• URL: https://api.monarch.com/auth/login/')
     console.log('• Headers: Fresh device-uuid, Client-Platform: web')
     console.log('• Body: username, password, totp (in first request)')
     console.log('• Method: POST with JSON body')
@@ -79,7 +79,7 @@ async function testFreshUUID() {
     }
     
     console.log('\n📝 Current implementation status:')
-    console.log('✅ URL: api.monarchmoney.com/auth/login/')
+    console.log('✅ URL: api.monarch.com/auth/login/')
     console.log('✅ Headers: Exact Python match')
     console.log('✅ Body: Exact Python match') 
     console.log('✅ UUID: Fresh per request')

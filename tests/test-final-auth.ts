@@ -12,15 +12,15 @@ async function testFinalAuth() {
     const { MonarchClient } = await import('./dist/cjs/index.js')
     
     const client = new MonarchClient({
-      baseURL: 'https://api.monarchmoney.com', // Correct API URL
+      baseURL: 'https://api.monarch.com', // Correct API URL
       timeout: 30000,
       retries: 1
     })
 
-    console.log('✅ MonarchClient initialized with correct api.monarchmoney.com')
+    console.log('✅ MonarchClient initialized with correct api.monarch.com')
 
     console.log('\n📋 CRITICAL FIXES Applied:')
-    console.log('✅ URL: api.monarchmoney.com (not app.monarchmoney.com)')
+    console.log('✅ URL: api.monarch.com (not app.monarchmoney.com)')
     console.log('✅ Headers: Client-Platform (capital C and P like Python)')
     console.log('✅ Same-session MFA handling')
     console.log('✅ Consistent device UUID throughout auth flow')
@@ -54,7 +54,7 @@ async function testFinalAuth() {
     }
 
     console.log('\n🚀 SUCCESS: MonarchMoney TypeScript library is fully operational!')
-    console.log('🎊 The api.monarchmoney.com URL and Client-Platform header were the keys!')
+    console.log('🎊 The api.monarch.com URL and Client-Platform header were the keys!')
 
   } catch (error) {
     console.log('\n❌ Authentication failed:', error.message)

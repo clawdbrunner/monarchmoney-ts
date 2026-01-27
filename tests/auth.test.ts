@@ -17,7 +17,7 @@ describe('AuthenticationService', () => {
       updateLastValidated: jest.fn()
     } as any
 
-    authService = new AuthenticationService('https://api.monarchmoney.com', mockSessionStorage)
+    authService = new AuthenticationService('https://api.monarch.com', mockSessionStorage)
   })
 
   describe('login', () => {

@@ -19,7 +19,7 @@ function generateDeviceUUID() {
 async function getCaptchaChallenge() {
   console.log('🎯 Attempting to get CAPTCHA challenge...')
   
-  const baseUrl = 'https://api.monarchmoney.com'
+  const baseUrl = 'https://api.monarch.com'
   const deviceUuid = generateDeviceUUID()
 
   const headers = {
@@ -104,7 +104,7 @@ async function testCaptchaSolving() {
     // Maybe the CAPTCHA is embedded in the normal login response
     console.log('\n🔄 Checking if CAPTCHA data is in failed login response...')
     
-    const baseUrl = 'https://api.monarchmoney.com'
+    const baseUrl = 'https://api.monarch.com'
     const deviceUuid = generateDeviceUUID()
     
     try {

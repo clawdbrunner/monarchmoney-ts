@@ -33,7 +33,7 @@ async function testImportIssue() {
   // Test 1: Direct fetch (like our working test)
   console.log('\n🧪 Test 1: Direct node-fetch')
   try {
-    const response1 = await fetch('https://api.monarchmoney.com/auth/login/', {
+    const response1 = await fetch('https://api.monarch.com/auth/login/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -63,7 +63,7 @@ async function testImportIssue() {
   try {
     const { MonarchClient } = await import('./dist/cjs/index.js')
     const client = new MonarchClient({
-      baseURL: 'https://api.monarchmoney.com',
+      baseURL: 'https://api.monarch.com',
       timeout: 30000,
       retries: 1
     })

@@ -33,7 +33,7 @@ async function testLibraryExact() {
   try {
     // Test 1: Without AbortSignal (like our working debug)
     console.log('\n🧪 Test 1: Without AbortSignal.timeout')
-    const response1 = await fetch('https://api.monarchmoney.com/auth/login/', {
+    const response1 = await fetch('https://api.monarch.com/auth/login/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -67,7 +67,7 @@ async function testLibraryExact() {
       setTimeout(() => abortController.abort(), 30000)
     }
     
-    const response2 = await fetch('https://api.monarchmoney.com/auth/login/', {
+    const response2 = await fetch('https://api.monarch.com/auth/login/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

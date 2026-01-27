@@ -233,7 +233,7 @@ const bills = await client.budgets.getBills({
 
 ```typescript
 const client = new MonarchClient({
-  baseURL: 'https://api.monarchmoney.com', // Default
+  baseURL: 'https://api.monarch.com', // Default
   timeout: 30000, // 30 seconds
   retries: 3,
   cache: {

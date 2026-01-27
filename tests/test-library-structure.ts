@@ -17,7 +17,7 @@ async function testLibraryStructure() {
     // Test client initialization
     console.log('\n🚀 Testing Client Initialization...')
     const client = new MonarchClient({
-      baseURL: 'https://api.monarchmoney.com',
+      baseURL: 'https://api.monarch.com',
       timeout: 30000
     })
     console.log('✅ MonarchClient initialized successfully')
