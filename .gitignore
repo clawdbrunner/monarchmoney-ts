@@ -1,3 +1,6 @@
+# HAR files (may contain PII/financial data)
+*.har
+
 # Dependencies
 node_modules/
 npm-debug.log*
